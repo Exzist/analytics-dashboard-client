@@ -1,60 +1,59 @@
 <template>
   <div class="p-9">
-    <div class="mb-5">
-      <h1 class="text-black text-2xl font-bold mb-5">
-        E-commerce Data Analytics Dashboard
-      </h1>
-      <div class="flex gap-x-5 mb-5">
-        <StatsCard
-          title="Total Sales"
-          :data="transactionsStore.totalSales"
-          :formatter="(val) => formatCurrency(val)"
-          ><span
-            class="pi pi-dollar text-black bg-gray-300 p-1.5 rounded-md"
-          ></span
-        ></StatsCard>
-        <StatsCard
-          title="Transactions"
-          :data="transactionsStore.transactionsCount"
-          ><span
-            class="pi pi-shopping-cart text-black bg-gray-300 p-1.5 rounded-md"
-          ></span
-        ></StatsCard>
-        <StatsCard title="Customers" :data="customersStore.customersCount"
-          ><span
-            class="pi pi-user text-black bg-gray-300 p-1.5 rounded-md"
-          ></span
-        ></StatsCard>
-        <StatsCard title="Countries" :data="customersStore.countriesCount"
-          ><span
-            class="pi pi-globe text-black bg-gray-300 p-1.5 rounded-md"
-          ></span
-        ></StatsCard>
-      </div>
-      <div class="bg-white rounded-md p-3">
+    <h1 class="text-black text-2xl font-bold mb-5">
+      E-commerce Data Analytics Dashboard
+    </h1>
+    <!-- Статусы: адаптивная сетка 1/2/4 колонки -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-5">
+      <StatsCard
+        title="Total Sales"
+        :data="transactionsStore.totalSales"
+        :formatter="(val) => formatCurrency(val)"
+      >
+        <span
+          class="pi pi-dollar text-black bg-gray-300 p-1.5 rounded-md"
+        ></span>
+      </StatsCard>
+      <StatsCard
+        title="Transactions"
+        :data="transactionsStore.transactionsCount"
+      >
+        <span
+          class="pi pi-shopping-cart text-black bg-gray-300 p-1.5 rounded-md"
+        ></span>
+      </StatsCard>
+      <StatsCard title="Customers" :data="customersStore.customersCount">
+        <span class="pi pi-user text-black bg-gray-300 p-1.5 rounded-md"></span>
+      </StatsCard>
+      <StatsCard title="Countries" :data="customersStore.countriesCount">
+        <span
+          class="pi pi-globe text-black bg-gray-300 p-1.5 rounded-md"
+        ></span>
+      </StatsCard>
+    </div>
+
+    <!-- Основная область: двухколоночная на lg+, одиночная на мобильных -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
+      <!-- Большой график (заполняет 2/3 ширины на lg) -->
+      <div class="bg-white rounded-md p-3 lg:col-span-2">
         <h2 class="text-black text-xl font-bold mb-3">Sales over time</h2>
-        <!-- <HorizontalBarChart :data="productsStore.topProducts" /> -->
         <LineChart :data="transactionsStore.monthlySales" />
       </div>
-    </div>
-    <!-- <div class="flex gap-x-7 mb-5">
-      <div class="flex-1/2 basis-0 bg-white rounded-md p-3">
-        <h2 class="text-black text-xl font-bold mb-3">Top products</h2>
-        <HorizontalBarChart :data="productsStore.topProducts" />
+
+      <!-- Правая колонка: можно добавить несколько карточек или вертикальную колонку -->
+      <div class="space-y-5">
+        <div class="bg-white rounded-md p-3">
+          <h2 class="text-black text-xl font-bold mb-3">Sales by country</h2>
+          <PieChart :data="transactionsStore.salesByCountry" />
+        </div>
+        <div class="bg-white rounded-md p-3">
+          <h2 class="text-black text-xl font-bold mb-3">Top products</h2>
+          <HorizontalBarChart :data="productsStore.topProducts" />
+        </div>
       </div>
-      <div class="flex-1/2 basis-0 bg-white rounded-md p-3">
-        <h2 class="text-black text-xl font-bold mb-3">Sales by country</h2>
-        <PieChart :data="transactionsStore.salesByCountry" />
-      </div>
-    </div> -->
-    <div class="bg-white rounded-md p-3 mb-5">
-      <h2 class="text-black text-xl font-bold mb-3">Top products</h2>
-      <HorizontalBarChart :data="productsStore.topProducts" />
     </div>
-    <div class="bg-white rounded-md p-3 mb-5">
-      <h2 class="text-black text-xl font-bold mb-3">Sales by country</h2>
-      <PieChart :data="transactionsStore.salesByCountry" />
-    </div>
+
+    <!-- Таблица на всю ширину -->
     <div class="bg-white rounded-md p-3">
       <h2 class="text-black text-xl font-bold mb-3">Latest transactions</h2>
       <DataTable :value="transactionsStore.lastTransactions">

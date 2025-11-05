@@ -22,7 +22,8 @@ export const useCustomerStore = defineStore("customers", () => {
     };
     return ApiService.query("/api/customers", config)
       .then(({ data }) => {
-        customers.value = data.data;
+        customers.value = data.customers;
+        customersCount.value = data.total;
       })
       .catch((err) => {
         console.log(err);

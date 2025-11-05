@@ -17,6 +17,7 @@ interface TopProducts {
 export const useProductsStore = defineStore("products", () => {
   // State
   const products = ref<Products[]>([]);
+  const productsCount = ref();
   const topProducts = ref<TopProducts[]>([]);
   const isLoading = ref(true);
 
@@ -27,7 +28,8 @@ export const useProductsStore = defineStore("products", () => {
     };
     return ApiService.query("/api/products", config)
       .then(({ data }) => {
-        products.value = data.data;
+        products.value = data.products;
+        productsCount.value = data.total;
       })
       .catch((err) => {
         console.log(err);
@@ -48,5 +50,12 @@ export const useProductsStore = defineStore("products", () => {
       });
   }
 
-  return { products, topProducts, isLoading, getProducts, getTopProducts };
+  return {
+    products,
+    topProducts,
+    isLoading,
+    getProducts,
+    getTopProducts,
+    productsCount,
+  };
 });

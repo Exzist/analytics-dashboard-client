@@ -36,7 +36,7 @@
           <template #filter="{ filterModel, filterCallback }">
             <InputText
               v-model="filterModel.value"
-              type="text"
+              type="number"
               class="w-40"
               style="max-width: 200px"
               placeholder="Search customer id"
@@ -48,7 +48,7 @@
           <template #filter="{ filterModel, filterCallback }">
             <InputText
               v-model="filterModel.value"
-              type="text"
+              type="number"
               class="w-40"
               style="max-width: 200px"
               placeholder="Search stock code"
@@ -60,7 +60,7 @@
           <template #filter="{ filterModel, filterCallback }">
             <InputText
               v-model="filterModel.value"
-              type="text"
+              type="number"
               class="w-40"
               style="max-width: 200px"
               placeholder="Search unit price"
@@ -72,7 +72,7 @@
           <template #filter="{ filterModel, filterCallback }">
             <InputText
               v-model="filterModel.value"
-              type="text"
+              type="number"
               class="w-40"
               style="max-width: 200px"
               placeholder="Search quantity"
@@ -82,13 +82,12 @@
         </Column>
         <Column field="invoiceDate" header="Invoice date" sortable>
           <template #filter="{ filterModel, filterCallback }">
-            <InputText
+            <DatePicker
               v-model="filterModel.value"
-              type="text"
               class="w-40"
               style="max-width: 200px"
               placeholder="Search invoice date"
-              @input="onFilterInput(filterModel, filterCallback)"
+              @date-select="onFilterInput(filterModel, filterCallback)"
             />
           </template>
         </Column>
@@ -103,10 +102,11 @@ import { Transactions } from "../../logic/views/Transactions";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import InputText from "primevue/inputtext";
+import DatePicker from "primevue/datepicker";
 
 export default defineComponent({
   name: "Transactions",
-  components: { DataTable, Column, InputText },
+  components: { DataTable, Column, InputText, DatePicker },
   setup() {
     return Transactions();
   },

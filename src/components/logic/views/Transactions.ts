@@ -26,8 +26,9 @@ export function Transactions() {
       limit: limit.value,
       sortField: sortField.value,
       sortOrder: sortOrder.value,
-      filters: filters.value,
+      filters: JSON.stringify(filters.value),
     });
+
     loading.value = false;
   };
 
